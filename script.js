@@ -8,21 +8,19 @@ const loader = document.getElementById('loader');
 
 let apiQuotes = []; // use let because we'll change the value of this when we fetch the quotes below
 
-// Show loading
-function loading() {
+function showLoadingSpinner() {
     loader.hidden = false;
     quoteContainer.hidden = true;
 }
 
-// Hide loading
-function complete() {
+function removeLoadingSpinner() {
     quoteContainer.hidden = false;
     loader.hidden = true;
 }
 
 // Show new quote
 function newQuote() {
-    loading();
+    showLoadingSpinner();
     // Pick a random quote from apiQuotes array
     const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
     // Check for author and replace with 'Unknown' if needed
@@ -33,13 +31,12 @@ function newQuote() {
     }
     // If quote is long, apply different CSS class to shrink it
     if (quote.text.length > 120) {
-        quoteText.classList.add("long-quote"); // adds this class to the element
+        quoteText.classList.add("long-quote");
     } else {
-        quoteText.classList.remove("long-quote"); // need to remove class for the next quote as appropriate
+        quoteText.classList.remove("long-quote");
     }
-    // Set quote, hide loader
     quoteText.textContent = quote.text;
-    complete();
+    removeLoadingSpinner();
 }
 
 // Show new quote from backup file in case API is down
@@ -51,11 +48,11 @@ function newOfflineQuote() {
 
 // Get quotes from API and store locally
 async function getQuotes() {
-    loading();
+    showLoadingSpinner();
     const apiUrl = 'https://type.fit/api/quotes';
     try {
-        const response = await fetch(apiUrl); // when we call the function, first it tries to fetch the response from constant apiUrl, then saves that as the response constant (JSON string). We use async await here to ensure we don't save the response constant until after getting the response from the fetch
-        apiQuotes = await response.json(); // turn the response JSON string into an apiQuotes global variable JSON object
+        const response = await fetch(apiUrl);
+        apiQuotes = await response.json();
         newQuote();
     } catch (error) {
         // handle error when not getting a quote back from API by using local quote store
