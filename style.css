@@ -1,0 +1,8 @@
+html {
+    box-sizing: border-box; /* prevents padding from adding height or width to page outside of view */
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+}
