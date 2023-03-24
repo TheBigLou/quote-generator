@@ -30,7 +30,7 @@ function newQuote() {
         authorText.textContent = quote.author;
     }
     // If quote is long, apply different CSS class to shrink it
-    if (quote.text.length > 120) {
+    if (quote.text.length > 100) {
         quoteText.classList.add("long-quote");
     } else {
         quoteText.classList.remove("long-quote");
